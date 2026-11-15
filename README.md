@@ -74,6 +74,58 @@ Session information was supplied to Google's Gemini model through its API. Predi
 
 The evaluation script uses Python's built-in `csv` and `pathlib` libraries. It generates a classification report and confusion matrix without requiring external Python packages.
 
+## Reproducing the Experiment
+
+The experiment used Google Colab and the Gemini API to classify 51 Cowrie SSH sessions.
+
+### Environment and Model
+
+- **Environment:** Google Colab
+- **Model:** `gemini-3.5-flash-lite`
+- **Model run date:** November 13, 2026
+- **Input file:** `data/ai_input.csv`
+- **Prediction output:** `data/gemini_predictions.csv`
+- **Evaluation script:** `scripts/evaluate_predictions.py`
+
+### Classification Instructions
+
+Gemini was instructed to classify each Cowrie session using the following labels:
+
+- `reconnaissance`
+- `brute_force`
+- `malicious_command_attempt`
+- `insufficient_evidence`
+
+The classification instructions required the model to:
+
+- Use only the evidence recorded in each session.
+- Avoid inventing commands, events, or attacker actions.
+- Avoid treating a connection alone as proof of malicious activity.
+- Provide a predicted label, a reason based on the observed evidence, and a confidence level.
+- Return structured JSON containing `predicted_label`, `reason`, and `confidence`.
+
+The human-reviewed reference labels were excluded from the AI input.
+
+### Evaluation
+
+After generating the predictions, the output was compared with the human-reviewed labels using the session IDs.
+
+To reproduce the evaluation from the repository root, run:
+
+```bash
+python scripts/evaluate_predictions.py
+```
+
+The script uses Python's built-in `csv` and `pathlib` libraries and generates the evaluation results and confusion matrix.
+
+### Reproducibility Notes
+
+The original data preparation and Gemini API execution scripts were not preserved in the repository. The evaluation script was reconstructed after the experiment.
+
+The classification instructions above summarise the documented prompt requirements and should not be treated as a verbatim copy of the original prompt. The archived input and prediction CSV files are included to support inspection of the experiment.
+
+API responses may vary over time, even when using the same model identifier. The archived predictions therefore represent the results of the November 13, 2026 run.
+
 ## Results
 
 The Gemini model classified all 51 Cowrie SSH sessions. Its predictions were compared against the researcher-reviewed reference labels using session IDs.
