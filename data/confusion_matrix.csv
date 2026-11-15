@@ -1,0 +1,5 @@
+human_label,reconnaissance,brute_force,malicious_command_attempt,insufficient_evidence
+reconnaissance,2,0,0,0
+brute_force,0,0,0,0
+malicious_command_attempt,0,0,18,0
+insufficient_evidence,0,0,0,31
